@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北京邮电大学失物招领处</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#f5f7fa;padding:16px;display:flex;justify-content:center}
+#app{max-width:1200px;width:100%;background:#fff;border-radius:16px;box-shadow:0 2px 12px #0001;display:flex;min-height:600px;overflow:hidden}
+#side{width:220px;background:#fafcff;border-right:1px solid #eee;padding:20px 14px;display:flex;flex-direction:column;gap:14px}
+#side .n{margin-bottom:8px}
+#nick{width:100%;padding:8px;border:1px solid
+#ddd;border-radius:20px;font-size:13px;outline:none}
+#side button{padding:6px 10px;border:none;background:#eef2f6;border-radius:20px;cursor:pointer;font-size:12px;margin-top:4px}
+#side button:hover{background:#e2e8f0}
+#side .m{padding:8px 12px;border-radius:10px;cursor:pointer;font-size:14px;color:#333}
+#side .m:hover{background:#eef2f6}
+#side .m.on{background:#eef2f6;font-weight:600}
+#fb{font-size:11px;color:#b34a4a;min-height:14px;margin-top:2px}
+#main{flex:1;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.hide{display:none!important}
+#search{width:100%;padding:12px 18px;border:1px solid #ddd;border-radius:30px;font-size:14px;outline:none}
+#tabs{display:flex;gap:8px;border-bottom:1px solid #eee;padding-bottom:6px}
+#tabs .t{padding:6px 12px;cursor:pointer;font-size:14px;color:#666;border-bottom:2px solid transparent}
+#tabs .t.on{color:#0b2b44;border-color:#0b2b44;font-weight:600}
+#posts{display:flex;flex-direction:column;gap:12px;flex:1}
+.card{border:1px solid #eee;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.card:hover{background:#fbfdff}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.au{display:flex;align-items:center;gap:8px;font-size:13px;color:#1e3b5c}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;cursor:pointer;font-size:13px;flex-shrink:0}
+.tt{font-weight:600;font-size:15px;color:#0f263b}
+.ds{font-size:13px;color:#516273;white-space:pre-wrap;word-break:break-word}
+.im{display:flex;flex-wrap:wrap;gap:6px}
+.im img{max-width:100px;max-height:100px;border-radius:6px;object-fit:cover;border:1px solid #eee}
+.mt{font-size:11px;color:#93a5b8;display:flex;gap:10px}
+.bd{font-size:11px;background:#eef2f6;padding:2px 8px;border-radius:20px;color:#4b5b6b}
+.em{color:#94a3b8;text-align:center;padding:40px;border:1px dashed #ddd;border-radius:12px}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.fg label{font-size:13px;font-weight:600;color:#333}
+.fg textarea{min-height:100px;padding:8px;border:1px solid #ddd;border-radius:8px;font-size:13px;outline:none;resize:vertical}
+.fg input[type=file]{font-size:12px}
+#prev{display:flex;flex-wrap:wrap;gap:6px}
+#prev .pi{position:relative;width:80px;height:80px;border-radius:6px;overflow:hidden;border:1px solid #eee}
+#prev .pi img{width:100%;height:100%;object-fit:cover}
+#prev .pi b{position:absolute;top:0;right:0;background:#0008;color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px}
+.prim{background:#0b2b44;color:#fff;border:none;padding:8px 20px;border-radius:20px;cursor:pointer;font-size:14px}
+.prim:hover{background:#1e3b5c}
+#cfb{font-size:12px;color:#b34a4a;min-height:16px;margin-top:6px}
+#convs{display:flex;flex-direction:column;gap:8px}
+.conv{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:#fafcff;border:1px solid #eee;cursor:pointer}
+.conv:hover{background:#f0f5fa}
+.conv .ci{flex:1;overflow:hidden}
+.conv .cn{font-weight:600;font-size:14px}
+.conv .cl{font-size:12px;color:#6b7a8a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ch{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+#cmsgs{display:flex;flex-direction:column;gap:10px;height:400px;overflow-y:auto;padding:12px;background:#fafcff;border-radius:12px;border:1px solid #eee}
+.msg{display:flex;flex-direction:column;max-width:75%}
+.msg.self{align-self:flex-end;align-items:flex-end}
+.bub{padding:8px 14px;border-radius:14px;background:#fff;border:1px solid #eee;font-size:13px;word-break:break-word}
+.msg.self .bub{background:#0b2b44;color:#fff;border-color:#0b2b44}
+.cm{font-size:11px;color:#94a3b8;margin-top:2px}
+#cin{display:flex;gap:8px;margin-top:10px}
+#cin input{flex:1;padding:10px 16px;border:1px solid #ddd;border-radius:20px;font-size:13px;outline:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="side">
+    <div class="n"><b>北京邮电大学失物招领处</b></div>
+    <div>
+      <input id="nick" maxlength="20" placeholder="昵称">
+      <button id="saveNick">保存昵称</button>
+      <div id="fb"></div>
+    </div>
+   <div class="m on" data-v="home">🏠 全部帖子</div>
+    <div class="m" data-v="mine">📋 我的帖子</div>
+    <div class="m" data-v="create">➕ 发帖</div>
+    <div class="m" data-v="messages">✉️ 私信</div>
+  </div>
+  <div id="main">
+    <div id="viewHome">
+      <input id="search" placeholder="搜索帖子（标题、内容、发布者）">
+      <div id="tabs">
+        <div class="t on" data-f="all">全部</div>
+        <div class="t" data-f="seek-owner">寻主</div>
+        <div class="t" data-f="seek-item">寻物</div>
+      </div>
+      <div id="posts"></div>
+    </div>
+    <div id="viewCreate" class="hide">
+      <div class="fg"><label>图片（必填，可多选）</label><input type="file" id="pimg" accept="image/*" multiple><div id="prev"></div></div>
+      <div class="fg"><label>文字（必填）</label><textarea id="ptxt" placeholder="描述内容..."></textarea></div>
+      <div class="fg"><label>类型</label>
+      <div><label><input type="radio" name="pt" value="seek-item" checked> 寻物</label>
+        <label style="margin-left:16px"><input type="radio" name="pt" value="seek-owner"> 寻主</label></div>
+      </div>
+      <button class="prim" id="submit">发布</button>
+      <div id="cfb"></div>
+    </div>
+    <div id="viewMessages" class="hide">
+      <h3 style="margin-bottom:10px">私信</h3>
+      <div id="convs"></div>
+    </div>
+    <div id="viewChat" class="hide">
+      <div id="ch"><button id="back" style="padding:4px 12px;border:none;background:#eef2f6;border-radius:20px;cursor:pointer;font-size:12px">← 返回</button><b id="cwn"></b></div>
+      <div id="cmsgs"></div>
+      <div id="cin"><input id="ci" placeholder="输入消息..."><button class="prim" id="send">发送</button></div>
+    </div>
+ </div>
+</div>
+<script>
+// ===== 存储 =====
+const K={p:'bupt_posts',n:'bupt_nicks',c:'bupt_cur',v:'bupt_conv'};
+const load=(k,d)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):d}catch(e){return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+// 默认帖子
+const DEF=[
+ {id:'p1',author:'小北邮',type:'seek-item',title:'丢失黑色U盘',description:'教三附近丢失金士顿黑色U盘，有BYR字样。',time:'2小时前',images:[]},
+ {id:'p2',author:'邮子',type:'seek-owner',title:'捡到校园卡(李华)',description:'图书馆二楼捡到校园卡，姓名李华，请失主联系。',time:'5小时前',images:[]},
+ {id:'p3',author:'沙河小土豆',type:'seek-item',title:'寻黑色雨伞',description:'食堂门口丢失黑色长柄雨伞，木质手柄。',time:'昨天',images:[]},
+ {id:'p4',author:'热心同学',type:'seek-owner',title:'捡到白色耳机',description:'西门附近捡到白色无线耳机，在保安亭。',time:'昨天',images:[]}
+];
+
+// ===== 状态 =====
+let posts=load(K.p,DEF);
+let nicks=load(K.n,['小北邮','邮子','沙河小土豆','热心同学','游客']);
+let cur=load(K.c,null);
+let convs=load(K.v,{});
+let view='home',mine=false,filter='all',search='',chatWith=null,pending=[];
+
+// 初始化游客昵称
+if(!cur||!nicks.includes(cur)){
+  let base='游客',c=base,i=0;
+  while(nicks.includes(c)&&i++<200)c=base+'_'+Math.floor(Math.random()*9999);
+  cur=c;nicks.push(c);save(K.n,nicks);save(K.c,cur);
+}
+if(!nicks.includes('游客')){nicks.push('游客');save(K.n,nicks)}
+
+// ===== 工具 =====
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const color=n=>{let h=0;for(let i=0;i<n.length;i++)h=n.charCodeAt(i)+((h<<5)-h);return `hsl(${Math.abs(h)%360},60%,65%)`};
+const convKey=(a,b)=>[a,b].sort().join('||');
+
+// ===== 视图切换 =====
+function go(v){
+  view=v;
+  ['Home','Create','Messages','Chat'].forEach(x=>$('view'+x).classList.toggle('hide',x.toLowerCase()!==v));
+  document.querySelectorAll('#side .m').forEach(e=>e.classList.remove('on'));
+  const m=$('side').querySelector(`.m[data-v="${v==='chat'?'messages':v}"]`);if(m)m.classList.add('on');
+  if(v==='home')renderPosts();
+  if(v==='messages')renderConvs();
+}
+
+// ===== 渲染帖子 =====
+function renderPosts(){
+  let list=posts.filter(p=>{
+    if(mine&&p.author!==cur)return false;
+    if(filter!=='all'&&p.type!==filter)return false;
+    if(search.trim()){
+      const t=search.trim().toLowerCase();
+      return p.title.toLowerCase().includes(t)||p.description.toLowerCase().includes(t)||p.author.toLowerCase().includes(t);
+    }
+    return true;
+  });
+  if(!list.length){$('posts').innerHTML='<div class="em">没有找到相关帖子</div>';return}
+  $('posts').innerHTML=list.map(p=>{
+    const imgs=p.images&&p.images.length?`<div class="im">${p.images.map(s=>`<img src="${s}">`).join('')}</div>`:'';
+    return `<div class="card">
+      <div class="hd">
+        <div class="au"><div class="av" style="background:${color(p.author)}" data-a="${esc(p.author)}">${esc(p.author[0])}</div>${esc(p.author)}</div>
+        <span class="bd">${p.type==='seek-owner'?'寻主':'寻物'}</span>
+      </div>
+      <div class="tt">${esc(p.title)}</div>
+      <div class="ds">${esc(p.description)}</div>
+      ${imgs}
+      <div class="mt"><span>🕒 ${esc(p.time)}</span></div>
+    </div>`;
+  }).join('');
+  $('posts').querySelectorAll('.av').forEach(el=>{
+    el.onclick=()=>openChat(el.dataset.a);
+  });
+}
+
+// ===== 搜索与分类 =====
+$('search').oninput=e=>{search=e.target.value;mine=false;go('home')};
+document.querySelectorAll('#tabs .t').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('#tabs .t').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');filter=t.dataset.f;mine=false;go('home');
+  };
+});
+
+// ===== 昵称 =====
+$('nick').value=cur;
+$('saveNick').onclick=()=>{
+  const n=$('nick').value.trim();
+  if(!n)return $('fb').textContent='昵称不能为空';
+  if(n===cur)return $('fb').textContent='昵称未变化';
+  if(nicks.includes(n))return $('fb').textContent='该昵称已被占用';
+  if(cur!=='游客'){const i=nicks.indexOf(cur);if(i>-1)nicks.splice(i,1)}
+  nicks.push(n);cur=n;save(K.n,nicks);save(K.c,cur);
+  $('fb').textContent='修改成功';setTimeout(()=>$('fb').textContent='',2000);
+  if(view==='home')renderPosts();
+};
+
+// ===== 发帖 =====
+$('pimg').onchange=e=>{
+  [...e.target.files].forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{pending.push(ev.target.result);renderPrev()};
+    r.readAsDataURL(f);
+  });
+  e.target.value='';
+};
+function renderPrev(){
+  $('prev').innerHTML=pending.map((s,i)=>`<div class="pi"><img src="${s}"><b data-i="${i}">×</b></div>`).join('');
+  $('prev').querySelectorAll('b').forEach(b=>b.onclick=()=>{pending.splice(+b.dataset.i,1);renderPrev()});
+}
+$('submit').onclick=()=>{
+  $('cfb').textContent='';
+  if(!pending.length)return $('cfb').textContent='请至少添加一张图片';
+  const txt=$('ptxt').value.trim();
+  if(!txt)return $('cfb').textContent='请输入文字内容';
+  const type=document.querySelector('input[name=pt]:checked').value;
+  const np={id:'p'+Date.now(),author:cur,type,title:txt.length>30?txt.slice(0,30)+'…':txt,description:txt,images:pending.slice(),time:'刚刚'};
+  posts.unshift(np);
+  try{save(K.p,posts)}catch(e){posts.shift();return $('cfb').textContent='图片过大存储失败'}
+  pending=[];renderPrev();$('ptxt').value='';
+  $('cfb').textContent='发布成功！';
+  filter='all';mine=false;search='';
+  document.querySelectorAll('#tabs .t').forEach(x=>x.classList.toggle('on',x.dataset.f==='all'));
+  setTimeout(()=>{go('home');$('cfb').textContent=''},600);
+};
+
+// ===== 私信 =====
+function openChat(a){
+  if(a===cur)return alert('不能给自己发私信');
+  chatWith=a;$('cwn').textContent=a;go('chat');renderChat();
+}
+function renderChat(){
+  const msgs=convs[convKey(cur,chatWith)]||[];
+  $('cmsgs').innerHTML=msgs.length?msgs.map(m=>`<div class="msg ${m.from===cur?'self':'other'}">
+    <div class="bub">${esc(m.text)}</div><div class="cm">${esc(m.from)} · ${esc(m.time)}</div>
+  </div>`).join(''):'<div class="em">暂无消息</div>';
+  $('cmsgs').scrollTop=$('cmsgs').scrollHeight;
+}
+$('send').onclick=()=>{
+  const t=$('ci').value.trim();if(!t||!chatWith)return;
+  const k=convKey(cur,chatWith);
+  if(!convs[k])convs[k]=[];
+  convs[k].push({from:cur,text:t,time:'刚刚'});
+  save(K.v,convs);$('ci').value='';renderChat();
+};
+$('ci').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('send').click()}};
+$('back').onclick=()=>{chatWith=null;go('messages')};
+
+function renderConvs(){
+  const items=[];
+  for(const[k,ms]of Object.entries(convs)){
+    const p=k.split('||');
+    if(p.includes(cur)){
+      const o=p[0]===cur?p[1]:p[0];
+      const last=ms[ms.length-1];
+      items.push({o,text:last?last.text:'',time:last?last.time:''});
+    }
+  }
+  if(!items.length){$('convs').innerHTML='<div class="em">暂无私信</div>';return}
+  $('convs').innerHTML=items.map(i=>`<div class="conv" data-o="${esc(i.o)}">
+    <div class="av" style="background:${color(i.o)}">${esc(i.o[0])}</div>
+    <div class="ci"><div class="cn">${esc(i.o)}</div><div class="cl">${esc(i.text)}</div></div>
+  </div>`).join('');
+  $('convs').querySelectorAll('.conv').forEach(el=>el.onclick=()=>openChat(el.dataset.o));
+}
+
+// ===== 菜单 =====
+document.querySelectorAll('#side .m').forEach(m=>{
+  m.onclick=()=>{
+    const v=m.dataset.v;
+    if(v==='home'){mine=false;filter='all';search='';$('search').value='';document.querySelectorAll('#tabs .t').forEach(x=>x.classList.toggle('on',x.dataset.f==='all'))}
+    if(v==='mine'){mine=true;filter='all';search='';$('search').value='';document.querySelectorAll('#tabs .t').forEach(x=>x.classList.toggle('on',x.dataset.f==='all'))}
+    go(v);
+  };
+});
+
+// ===== 启动 =====
+go('home');
+</script>
+</body>
+</html>
